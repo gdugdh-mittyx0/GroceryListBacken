@@ -1,0 +1,427 @@
+basePath: /api
+definitions:
+  entities.Category:
+    properties:
+      color:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  entities.FullProduct:
+    properties:
+      category:
+        $ref: '#/definitions/entities.Category'
+      category_id:
+        type: integer
+      icon:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      priority:
+        type: integer
+      status:
+        $ref: '#/definitions/entities.StatusProduct'
+      tags:
+        items:
+          $ref: '#/definitions/entities.Tag'
+        type: array
+    type: object
+  entities.StatusProduct:
+    enum:
+    - bought
+    - need_buying
+    - not_need_buying
+    type: string
+    x-enum-varnames:
+    - StatusProductBuying
+    - StatusProductNeedBuying
+    - StatusProductNotNeedBuying
+  entities.Tag:
+    properties:
+      color:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  response.Error:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+    type: object
+  usecase.CategoriesCreateInput:
+    properties:
+      color:
+        type: string
+      name:
+        type: string
+    type: object
+  usecase.CategoriesUpdateInput:
+    properties:
+      color:
+        type: string
+      name:
+        type: string
+    type: object
+  usecase.ProductsCreateInput:
+    properties:
+      category_id:
+        type: integer
+      icon:
+        type: string
+      name:
+        type: string
+      priority:
+        type: integer
+      tags_id:
+        items:
+          type: integer
+        type: array
+    type: object
+  usecase.ProductsUpdateInput:
+    properties:
+      category_id:
+        type: integer
+      icon:
+        type: string
+      name:
+        type: string
+      priority:
+        type: integer
+      status:
+        $ref: '#/definitions/entities.StatusProduct'
+      tags_id:
+        items:
+          type: integer
+        type: array
+    type: object
+  usecase.TagsCreateInput:
+    properties:
+      color:
+        type: string
+      name:
+        type: string
+    type: object
+  usecase.TagsUpdateInput:
+    properties:
+      color:
+        type: string
+      name:
+        type: string
+    type: object
+info:
+  contact: {}
+  title: glbackend API
+  version: "1.0"
+paths:
+  /categories:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entities.Category'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Получение списка категорий
+      tags:
+      - categories
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID категории
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: Данные категории
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/usecase.CategoriesUpdateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Category'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Обновление категории
+      tags:
+      - categories
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные категории
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/usecase.CategoriesCreateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Category'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Создание категории
+      tags:
+      - categories
+  /categories/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID категории
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: boolean
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Удаление категории
+      tags:
+      - categories
+  /products:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entities.FullProduct'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Получение списка продуктов
+      tags:
+      - products
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные продукта
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/usecase.ProductsCreateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.FullProduct'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Создание продукта
+      tags:
+      - products
+  /products/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID продукта
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: boolean
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Удаление продукта
+      tags:
+      - products
+    get:
+      parameters:
+      - description: ID продукта
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.FullProduct'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Получение продукта по ID
+      tags:
+      - products
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID продукта
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Данные продукта
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/usecase.ProductsUpdateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.FullProduct'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Обновление продукта
+      tags:
+      - products
+  /tags:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entities.Tag'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Получение списка тегов
+      tags:
+      - tags
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID тега
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: Данные тега
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/usecase.TagsUpdateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Tag'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Обновление тега
+      tags:
+      - tags
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Данные тега
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/usecase.TagsCreateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Tag'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Создание тега
+      tags:
+      - tags
+  /tags/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID тега
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: boolean
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Удаление тега
+      tags:
+      - tags
+securityDefinitions:
+  <BearerAuth>:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

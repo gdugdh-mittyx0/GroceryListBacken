@@ -1,0 +1,14 @@
+p, lawyer, /*, GET, allow
+p, lawyer, /*, POST, allow
+p, lawyer, /*, PATCH, allow
+p, lawyer, /*, DELETE, allow
+
+p, admin, /*, GET, allow
+p, admin, /*, POST, allow
+p, admin, /*, PATCH, allow
+p, admin, /*, DELETE, allow
+
+p, lawyer, /admin/*, GET, deny
+p, lawyer, /admin/*, POST, deny
+p, lawyer, /admin/*, PATCH, deny
+p, lawyer, /admin/*, DELETE, deny
