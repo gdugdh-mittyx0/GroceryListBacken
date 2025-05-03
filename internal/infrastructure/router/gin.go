@@ -494,6 +494,11 @@ func (g ginEngine) CORSMiddleware() gin.HandlerFunc {
 		"http://localhost:4200/",
 		"https://glbackend.ru/",
 		"https://glbackend.ru",
+		"https://mitrvm.github.io",
+		"https://mitrvm.github.io/",
+		"https://mitrvm.github.io/wip/#/dashboard/home/",
+		"https://mitrvm.github.io/wip",
+		"https://mitrvm.github.io/wip/",
 	}
 
 	return func(c *gin.Context) {

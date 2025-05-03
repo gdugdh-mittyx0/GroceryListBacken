@@ -25,7 +25,7 @@ CREATE TABLE Product (
 CREATE Table TagInProduct (
     id SERIAL PRIMARY KEY,
     tag_id INTEGER NOT NULL,
-    FOREIGN KEY (tag_id) REFERENCES Tag(id)  
+    FOREIGN KEY (tag_id) REFERENCES Tag(id), 
     product_id INTEGER NOT NULL,
     FOREIGN KEY (product_id) REFERENCES Product(id)     
 )
