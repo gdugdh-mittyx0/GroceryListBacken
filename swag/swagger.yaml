@@ -137,35 +137,6 @@ paths:
       summary: Получение списка категорий
       tags:
       - categories
-    patch:
-      consumes:
-      - application/json
-      parameters:
-      - description: ID категории
-        in: query
-        name: id
-        required: true
-        type: string
-      - description: Данные категории
-        in: body
-        name: input
-        required: true
-        schema:
-          $ref: '#/definitions/usecase.CategoriesUpdateInput'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/entities.Category'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/response.Error'
-      summary: Обновление категории
-      tags:
-      - categories
     post:
       consumes:
       - application/json
@@ -212,6 +183,35 @@ paths:
           schema:
             $ref: '#/definitions/response.Error'
       summary: Удаление категории
+      tags:
+      - categories
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID категории
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: Данные категории
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/usecase.CategoriesUpdateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Category'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Обновление категории
       tags:
       - categories
   /products:
