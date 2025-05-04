@@ -487,35 +487,35 @@ func (g ginEngine) buildCategoriesDeleteAction(c *gin.Context) {
 func (g ginEngine) CORSMiddleware() gin.HandlerFunc {
 	// Список разрешенных доменов
 
-	var allowedOrigins = []string{
-		"http://localhost:83",
-		"http://localhost:83/",
-		"http://localhost:4200",
-		"http://localhost:4200/",
-		"http://localhost:8080",
-		"http://localhost:8080/",
-		"https://glbackend.ru/",
-		"https://glbackend.ru",
-		"https://mitrvm.github.io",
-		"https://mitrvm.github.io/",
-		"https://mitrvm.github.io/wip/#/dashboard/home/",
-		"https://mitrvm.github.io/wip",
-		"https://mitrvm.github.io/wip/",
-	}
+	// var allowedOrigins = []string{
+	// 	"http://localhost:83",
+	// 	"http://localhost:83/",
+	// 	"http://localhost:4200",
+	// 	"http://localhost:4200/",
+	// 	"http://localhost:8080",
+	// 	"http://localhost:8080/",
+	// 	"https://glbackend.ru/",
+	// 	"https://glbackend.ru",
+	// 	"https://mitrvm.github.io",
+	// 	"https://mitrvm.github.io/",
+	// 	"https://mitrvm.github.io/wip/#/dashboard/home/",
+	// 	"https://mitrvm.github.io/wip",
+	// 	"https://mitrvm.github.io/wip/",
+	// }
 
 	return func(c *gin.Context) {
 
 		origin := c.Request.Header.Get("Origin")
 
-		allowed := false
+		// allowed := false
 
 		// Проверяем, разрешён ли домен, указанный в Origin заголовке запроса
-		for _, o := range allowedOrigins {
-			if o == origin {
-				allowed = true
-				break
-			}
-		}
+		// for _, o := range allowedOrigins {
+		// 	if o == origin {
+		// 		allowed = true
+		// 		break
+		// 	}
+		// }
 
 		// if origin == "" {
 		// 	referer := c.Request.Header.Get("Referer")
@@ -530,16 +530,9 @@ func (g ginEngine) CORSMiddleware() gin.HandlerFunc {
 
 		// allowed = false
 
-		for _, allowedOrigin := range allowedOrigins {
-			if origin == allowedOrigin {
-				allowed = true
-				break
-			}
-		}
-
-		if allowed && origin != "" {
-			c.Writer.Header().Set("Access-Control-Allow-Origin", origin)
-		}
+		// if allowed && origin != "" {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", origin)
+		// }
 		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, PATCH, DELETE, OPTIONS, GET, PUT")
