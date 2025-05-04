@@ -350,7 +350,7 @@ func (g ginEngine) buildCategoriesCreateAction(c *gin.Context) {
 // @Param		input	body		usecase.CategoriesUpdateInput	true	"Данные категории"
 // @Success	200		{object}	entities.Category
 // @Failure	400		{object}	response.Error
-// @Router		/categories [patch]
+// @Router		/categories/{id} [patch]
 func (g ginEngine) buildCategoriesUpdateAction(c *gin.Context) {
 	var (
 		uc = usecase.NewCategoriesUpdateUsecase(
