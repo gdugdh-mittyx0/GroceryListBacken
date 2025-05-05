@@ -38,5 +38,5 @@ func (a *CategoriesFindAllAction) Execute(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	response.NewSuccessList(w, result, int64(len(result)), http.StatusOK)
+	response.NewSuccessList(w, result, int(len(result)), http.StatusOK)
 }

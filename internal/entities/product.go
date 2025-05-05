@@ -34,4 +34,5 @@ type ProductRepository interface {
 	FindAll(ctx context.Context) ([]Product, error)
 	FindByID(ctx context.Context, id uint) (Product, error)
 	FindAllByTagID(ctx context.Context, tagID uint) ([]Product, error)
+	FindAllByIDs(ctx context.Context, ids []uint) ([]Product, error)
 }

@@ -260,8 +260,11 @@ func (f *FindBuilder) Not(query interface{}, args ...interface{}) repo.Find {
 	return f
 }
 
-func (f *FindBuilder) Count(total *int64) (err error) {
-	return f.db.Count(total).Error
+func (f *FindBuilder) Count(total *int) (err error) {
+	var count int64
+	err = f.db.Count(&count).Error
+	*total = int(count)
+	return err
 }
 
 func (f *FindBuilder) Distinct(tables []string) repo.Find {

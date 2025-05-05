@@ -74,6 +74,7 @@ func (g ginEngine) setupRoutes(router *gin.Engine) {
 		products.GET("/:id", g.buildProductsFindByIDAction)
 		products.POST("", g.buildProductsCreateAction)
 		products.PATCH("/:id", g.buildProductsUpdateAction)
+		products.PATCH("/statuses", g.buildProductsStatusesUpdateAction)
 		products.DELETE("/:id", g.buildProductsDeleteAction)
 	}
 
@@ -191,6 +192,28 @@ func (g ginEngine) buildProductsUpdateAction(c *gin.Context) {
 			g.ctxTimeout,
 		)
 		act = action.NewProductsUpdateAction(uc, g.log)
+	)
+
+	paramsToQuery(c, []string{"id"})
+	act.Execute(c.Writer, c.Request)
+}
+
+// @Summary	Обновление статусов продукта
+// @Tags		products
+// @securityDefinitions.apikey	<BearerAuth>
+// @Accept		json
+// @Produce	json
+// @Param		input	body		usecase.ProductsStatusesUpdateInput	true	"Статусы продукта"
+// @Success	200		{object}	entities.FullProduct
+// @Failure	400		{object}	response.Error
+// @Router		/products/statuses [patch]
+func (g ginEngine) buildProductsStatusesUpdateAction(c *gin.Context) {
+	var (
+		uc = usecase.NewProductsStatusesUpdateUsecase(
+			g.repo,
+			g.ctxTimeout,
+		)
+		act = action.NewProductsStatusesUpdateAction(uc, g.log)
 	)
 
 	paramsToQuery(c, []string{"id"})

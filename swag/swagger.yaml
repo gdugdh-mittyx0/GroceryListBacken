@@ -85,6 +85,15 @@ definitions:
           type: integer
         type: array
     type: object
+  usecase.ProductsStatusesUpdateInput:
+    properties:
+      products_ids:
+        items:
+          type: integer
+        type: array
+      status:
+        $ref: '#/definitions/entities.StatusProduct'
+    type: object
   usecase.ProductsUpdateInput:
     properties:
       category_id:
@@ -324,6 +333,31 @@ paths:
           schema:
             $ref: '#/definitions/response.Error'
       summary: Обновление продукта
+      tags:
+      - products
+  /products/statuses:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Статусы продукта
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/usecase.ProductsStatusesUpdateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.FullProduct'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Обновление статусов продукта
       tags:
       - products
   /tags:

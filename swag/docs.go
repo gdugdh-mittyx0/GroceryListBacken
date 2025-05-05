@@ -220,6 +220,45 @@ const docTemplate = `{
                 }
             }
         },
+        "/products/statuses": {
+            "patch": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "products"
+                ],
+                "summary": "Обновление статусов продукта",
+                "parameters": [
+                    {
+                        "description": "Статусы продукта",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/usecase.ProductsStatusesUpdateInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entities.FullProduct"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Error"
+                        }
+                    }
+                }
+            }
+        },
         "/products/{id}": {
             "get": {
                 "tags": [
@@ -601,6 +640,20 @@ const docTemplate = `{
                     "items": {
                         "type": "integer"
                     }
+                }
+            }
+        },
+        "usecase.ProductsStatusesUpdateInput": {
+            "type": "object",
+            "properties": {
+                "products_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "status": {
+                    "$ref": "#/definitions/entities.StatusProduct"
                 }
             }
         },

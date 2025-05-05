@@ -18,10 +18,10 @@ func NewSuccess(w http.ResponseWriter, result interface{}, status int) error {
 
 type SuccessList struct {
 	Result interface{} `json:"result"`
-	Total  int64       `json:"total"`
+	Total  int         `json:"total"`
 }
 
-func NewSuccessList(w http.ResponseWriter, result interface{}, total int64, status int) error {
+func NewSuccessList(w http.ResponseWriter, result interface{}, total int, status int) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
 

@@ -137,3 +137,22 @@ func (r ProductGSQL) FindAllByTagID(ctx context.Context, tagID uint) ([]entities
 
 	return products, nil
 }
+
+func (r ProductGSQL) FindAllByIDs(ctx context.Context, ids []uint) ([]entities.Product, error) {
+	var productsGorm []ProductGorm
+
+	if len(ids) == 0 {
+		return []entities.Product{}, nil
+	}
+
+	if err := r.db.BeginFind(ctx, r.tableName).Where("id IN ?", ids).Find(&productsGorm); err != nil {
+		return nil, errors.New("error_find_products")
+	}
+
+	products := make([]entities.Product, 0, len(productsGorm))
+	for _, productGorm := range productsGorm {
+		products = append(products, productGorm.toEntity())
+	}
+
+	return products, nil
+}
